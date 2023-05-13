@@ -7,7 +7,7 @@ networks:
 services:
   kheddamdb:
     container_name: kheddam_database
-    image: mcr.microsoft.com/mssql/server:2022-latest
+    image: mcr.microsoft.com/mssql/server:2017-latest
     ports: ["8002:1433"]
     networks:
       -  kheddam_backend
