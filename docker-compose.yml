@@ -1,0 +1,31 @@
+version: '3.4'
+
+
+
+networks:
+  kheddam_backend:
+services:
+  kheddamdb:
+    container_name: kheddam_database
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports: ["8002:1433"]
+    networks:
+      -  kheddam_backend
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Kheddam@2020#
+      - SA_PASSWORD=Kheddam@2020#
+  kheddam.presentation.api:
+    container_name: kheddam_api
+    image: ahmedlight/kheddampresentationapi
+    ports: ["8001:80"]
+    networks:
+      - kheddam_backend
+    depends_on: ["kheddamdb"]
+    volumes:
+     - ./Kheddam.Persistence.MainDb/Files:/app/Kheddam.Persistence.MainDb/Files
+    environment:
+      - DB_HOST=kheddamdb
+      - DB_Name=kheddam.app 
+      - DB_SA_PASSWORD=Kheddam@2020#
+ 
